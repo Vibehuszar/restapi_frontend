@@ -77,40 +77,53 @@ class App extends Component<{}, State>{
     let respone = await fetch('http://localhost:3000/konyv/ '+ id,{
       method: 'DELETE',
     }
-    
-    
     )
     await this.loadKonyvek();
   }
 
 
 render() {
-  return <div className='container-fluid'>
-    <h2>Könyvek</h2>
+  return <div className='fodiv container'>
+    <h2 className='display-2'>Könyvek</h2>
 
-    Szerző: <input type="text" value={this.state.szerzo} onChange={e => this.setState({ szerzo: e.currentTarget.value})}/><br />
-    Cím: <input type="text" value={this.state.cim} onChange={e => this.setState({ cim: e.currentTarget.value})} /><br />
-    Hossz: <input type="number" value={this.state.hossz} onChange={e => this.setState({ hossz: parseInt(e.currentTarget.value)})}/><br />
-    <button onClick={this.handleUpload}>Hozzáad</button> <br />
-    <table>
-    <tr>
-            <th>Szerző</th>
-            <th>Cím</th>
-            <th>Hossz</th>
+    <div className='form-group'>
+      <label htmlFor="">Szerző:</label>
+      <input type="text" className='form-control' value={this.state.szerzo} onChange={e => this.setState({ szerzo: e.currentTarget.value})}/><br />
+      <label htmlFor="">Cím:</label>
+      <input type="text" className='form-control' value={this.state.cim} onChange={e => this.setState({ cim: e.currentTarget.value})} /><br />
+      <label htmlFor="">Hossz: </label>
+      <input type="number" className='form-control' value={this.state.hossz} onChange={e => this.setState({ hossz: parseInt(e.currentTarget.value)})}/><br />
+      <button className='btn btn-outline-primary' onClick={this.handleUpload}>Hozzáad</button> <br />
+    </div>
+    
+  
+    <table className='table table-hover'>
+      <thead>
+          <tr>
+          <th scope="col">id</th>
+            <th scope='col'>Szerző</th>
+            <th scope='col'>Cím</th>
+            <th scope='col'>Hossz(oldal)</th>
           </tr>
-    </table>
+      </thead>
+    <tbody>
     {
       this.state.konyvek.map(konyv =>
-        <table> 
+        
           <tr>
+            <th scope="row">{konyv.id}</th>
             <td>{konyv.szerzo}</td>
             <td>{konyv.cim}</td>
             <td>{konyv.hossz}</td>
             <td><button onClick={() => this.handleDelete(konyv.id)}>Törlés</button></td>
           </tr>
-        </table>
+        
         )
       }
+    </tbody>
+    
+    </table>
+    
       
   </div>
 }
